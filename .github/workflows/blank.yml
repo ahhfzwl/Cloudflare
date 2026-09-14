@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 jobs:
-  第一个任务:
+  B0001:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
