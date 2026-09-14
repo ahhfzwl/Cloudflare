@@ -7,15 +7,14 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout current repository (zj branch)
+      - name: 第一步，检出zj分支
         uses: actions/checkout@v4
         with:
           ref: zj
           path: current-repo
 
       - name: 第二步，克隆远程仓库
-        run: |
-          git clone https://github.com/1345695/edcloudwasm.git source-repo
+        run: git clone https://github.com/1345695/edcloudwasm.git source-repo
 
       - name: 第三步，修改配置文件
         run: |
@@ -23,13 +22,10 @@ jobs:
           sed -i 's/^name = "edcloudwasm"/name = "zj"/' wrangler.toml
           sed -i 's/^UUID = "d342d11e-d424-4583-b36e-524ab1f0afa4"/UUID = "11112222-3333-4444-aaaa-bbbbccccdddd"/' wrangler.toml
           sed -i '/^cpu_ms = 300000/d' wrangler.toml
-          echo "Modified wrangler.toml:"
-          cat wrangler.toml
 
       - name: 第四步，放到指定目录
         run: |
-          mkdir -p current-repo/default
-          rm -rf current-repo/default/*
+          rm -rf current-repo/default
           rsync -av --exclude='.git' source-repo/ current-repo/default/
 
       - name: 第五步，提交推送更改
