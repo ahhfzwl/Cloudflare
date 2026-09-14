@@ -1,0 +1,49 @@
+name: Sync and Modify edcloudwasm
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync-and-modify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout current repository (zj branch)
+        uses: actions/checkout@v4
+        with:
+          ref: zj
+          path: current-repo
+
+      - name: Clone source repository
+        run: |
+          git clone https://github.com/1345695/edcloudwasm.git source-repo
+
+      - name: Modify wrangler.toml
+        run: |
+          cd source-repo
+          sed -i 's/^name = "edcloudwasm"/name = "zj"/' wrangler.toml
+          sed -i 's/^UUID = "d342d11e-d424-4583-b36e-524ab1f0afa4"/UUID = "11112222-3333-4444-aaaa-bbbbccccdddd"/' wrangler.toml
+          sed -i '/^cpu_ms = 300000/d' wrangler.toml
+          echo "Modified wrangler.toml:"
+          cat wrangler.toml
+
+      - name: Copy modified files to default directory
+        run: |
+          mkdir -p current-repo/default
+          rm -rf current-repo/default/*
+          rsync -av --exclude='.git' source-repo/ current-repo/default/
+
+      - name: Commit and push changes
+        run: |
+          cd current-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add default/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Sync and modify edcloudwasm to default directory"
+            git push origin zj
+          fi
