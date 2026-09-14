@@ -1,14 +1,11 @@
-name: Sync and Modify edcloudwasm
-
+name: 同步zj代码
 on:
   workflow_dispatch:
-
 jobs:
-  sync-and-modify:
+  Start:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout current repository (zj branch)
         uses: actions/checkout@v4
@@ -16,11 +13,11 @@ jobs:
           ref: zj
           path: current-repo
 
-      - name: Clone source repository
+      - name: 第二步，克隆远程仓库
         run: |
           git clone https://github.com/1345695/edcloudwasm.git source-repo
 
-      - name: Modify wrangler.toml
+      - name: 第三步，修改配置文件
         run: |
           cd source-repo
           sed -i 's/^name = "edcloudwasm"/name = "zj"/' wrangler.toml
@@ -29,13 +26,13 @@ jobs:
           echo "Modified wrangler.toml:"
           cat wrangler.toml
 
-      - name: Copy modified files to default directory
+      - name: 第四步，放到指定目录
         run: |
           mkdir -p current-repo/default
           rm -rf current-repo/default/*
           rsync -av --exclude='.git' source-repo/ current-repo/default/
 
-      - name: Commit and push changes
+      - name: 第五步，提交推送更改
         run: |
           cd current-repo
           git config user.name "github-actions[bot]"
