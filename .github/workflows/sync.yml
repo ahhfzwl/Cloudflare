@@ -11,7 +11,7 @@ jobs:
       - run: |
           git clone --depth=1 https://github.com/1345695/edcloudwasm.git /tmp/src
           sed -i '/^# pages中环境/,/^cpu_ms = 300000$/d' /tmp/src/wrangler.toml
-          sed -i 's/^name = "edcloudwasm"/name = "zj"/' /tmp/src/wrangler.toml
+          sed -i 's/^name = "edcloudwasm"/name = "default"/' /tmp/src/wrangler.toml
           rsync -av --exclude='.git' /tmp/src/ zj/Default/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
