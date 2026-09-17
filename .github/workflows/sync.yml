@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: workers
+          ref: Workers
       - run: |
           git clone --depth=1 https://github.com/1345695/edcloudwasm.git /tmp/src
           sed -i '/^# pages中环境/,/^cpu_ms = 300000$/d' /tmp/src/wrangler.toml
