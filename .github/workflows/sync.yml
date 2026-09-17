@@ -1,4 +1,4 @@
-name: 同步代码
+name: 同步zj代码
 on:
   workflow_dispatch:
 jobs:
