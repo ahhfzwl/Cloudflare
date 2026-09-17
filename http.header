@@ -1,9 +1,9 @@
-HTTP/2 201 
+HTTP/2 200 
 server: nginx
-date: Mon, 14 Sep 2026 14:46:52 GMT
+date: Thu, 17 Sep 2026 00:12:47 GMT
 content-type: application/json
 content-length: 586
-replay-nonce: XpnFMZel4gdqaiKjxqeKtGmyV9JLPHNZvPEf_2vd36A
+replay-nonce: -7pYZBAkoKJI4pG26HSi05F3CuVhpxARE3EP_xVzxp0
 cache-control: max-age=0, no-cache, no-store
 access-control-allow-origin: *
 location: https://acme.zerossl.com/v2/DV90/account/la-AxMi7GKMSb-u4Lk52UA
